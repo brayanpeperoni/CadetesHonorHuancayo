@@ -8,12 +8,7 @@ const navLinks = document.getElementById("navLinks");
 if (btnMenu && navLinks) {
   btnMenu.addEventListener("click", () => {
     navLinks.classList.toggle("abierto");
-
-    if (navLinks.classList.contains("abierto")) {
-      btnMenu.textContent = "×";
-    } else {
-      btnMenu.textContent = "☰";
-    }
+    btnMenu.textContent = navLinks.classList.contains("abierto") ? "×" : "☰";
   });
 
   document.querySelectorAll(".nav-links a").forEach((link) => {
@@ -26,39 +21,39 @@ if (btnMenu && navLinks) {
 
 
 /* ============================= */
-/* LISTA DE FOTOS Y VIDEO */
+/* FOTOS Y VIDEO */
 /* ============================= */
 
 const fotos = [
   /* FIESTA */
   { src: "Fiesta/IMG-20260512-WA0126.jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Fiesta de quince años" },
   { src: "Fiesta/IMG-20260512-WA0127.jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Entrada de honor" },
-  { src: "Fiesta/IMG-20260512-WA0128.jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Evento especial" },
-  { src: "Fiesta/IMG-20260512-WA0129.jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Presentación formal" },
-  { src: "Fiesta/IMG-20260512-WA0130.jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Cadetes en evento" },
-  { src: "Fiesta/IMG-20260512-WA0131.jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Celebración XV" },
-  { src: "Fiesta/IMG-20260512-WA0132.jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Evento elegante" },
-  { src: "Fiesta/IMG-20260512-WA0133.jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Acompañamiento especial" },
-  { src: "Fiesta/IMG-20260512-WA0134.jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Noche especial" },
-  { src: "Fiesta/IMG-20260512-WA0135.jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Presentación de cadetes" },
-  { src: "Fiesta/IMG-20260512-WA0136.jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Fiesta elegante" },
-  { src: "Fiesta/IMG-20260512-WA0137.jpg.jpeg", tipo: "evento", media: "imagen", titulo: "XV años" },
-  { src: "Fiesta/IMG-20260512-WA0138(1).jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Evento XV" },
-  { src: "Fiesta/IMG-20260512-WA0139(1).jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Cadetes de honor" },
-  { src: "Fiesta/IMG-20260512-WA0140(1).jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Momento especial" },
-  { src: "Fiesta/IMG-20260512-WA0141(1).jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Celebración" },
-  { src: "Fiesta/IMG-20260512-WA0142(1).jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Baile y presentación" },
-  { src: "Fiesta/IMG-20260512-WA0143(1).jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Recuerdo especial" },
-  { src: "Fiesta/IMG-20260512-WA0144.jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Ceremonia" },
-  { src: "Fiesta/IMG-20260512-WA0145.jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Cadetes Huancayo" },
-  { src: "Fiesta/IMG-20260512-WA0146(1).jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Evento familiar" },
-  { src: "Fiesta/IMG-20260512-WA0147.jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Presentación" },
-  { src: "Fiesta/IMG-20260512-WA0148.jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Noche inolvidable" },
-  { src: "Fiesta/IMG-20260512-WA0149.jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Servicio de cadetes" },
-  { src: "Fiesta/IMG-20260512-WA0150.jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Fiesta XV" },
-  { src: "Fiesta/IMG-20260512-WA0151.jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Evento de quince años" },
-  { src: "Fiesta/IMG-20260512-WA0152.jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Acompañamiento elegante" },
-  { src: "Fiesta/IMG-20260512-WA0153.jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Ceremonia especial" },
+  { src: "Fiesta/IMG-20260512-WA0128.jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Presentación elegante" },
+  { src: "Fiesta/IMG-20260512-WA0129.jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Cadetes en evento" },
+  { src: "Fiesta/IMG-20260512-WA0130.jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Celebración especial" },
+  { src: "Fiesta/IMG-20260512-WA0131.jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Noche inolvidable" },
+  { src: "Fiesta/IMG-20260512-WA0132.jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Momento de honor" },
+  { src: "Fiesta/IMG-20260512-WA0133.jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Evento formal" },
+  { src: "Fiesta/IMG-20260512-WA0134.jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Acompañamiento especial" },
+  { src: "Fiesta/IMG-20260512-WA0135.jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Ceremonia XV" },
+  { src: "Fiesta/IMG-20260512-WA0136.jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Presentación de cadetes" },
+  { src: "Fiesta/IMG-20260512-WA0137.jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Fiesta elegante" },
+  { src: "Fiesta/IMG-20260512-WA0138(1).jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Recuerdo especial" },
+  { src: "Fiesta/IMG-20260512-WA0139(1).jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Servicio de cadetes" },
+  { src: "Fiesta/IMG-20260512-WA0140(1).jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Momento familiar" },
+  { src: "Fiesta/IMG-20260512-WA0141(1).jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Celebración XV" },
+  { src: "Fiesta/IMG-20260512-WA0142(1).jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Noche de gala" },
+  { src: "Fiesta/IMG-20260512-WA0143(1).jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Cadetes de honor" },
+  { src: "Fiesta/IMG-20260512-WA0144.jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Entrada especial" },
+  { src: "Fiesta/IMG-20260512-WA0145.jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Evento Huancayo" },
+  { src: "Fiesta/IMG-20260512-WA0146(1).jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Elegancia y presencia" },
+  { src: "Fiesta/IMG-20260512-WA0147.jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Presentación formal" },
+  { src: "Fiesta/IMG-20260512-WA0148.jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Quince años" },
+  { src: "Fiesta/IMG-20260512-WA0149.jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Acompañamiento elegante" },
+  { src: "Fiesta/IMG-20260512-WA0150.jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Evento especial" },
+  { src: "Fiesta/IMG-20260512-WA0151.jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Celebración familiar" },
+  { src: "Fiesta/IMG-20260512-WA0152.jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Recuerdo de XV" },
+  { src: "Fiesta/IMG-20260512-WA0153.jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Noche especial" },
 
   /* SESIÓN DE FOTOS */
   { src: "SesionDeFotos/IMG-20260512-WA0124(2).jpg.jpeg", tipo: "sesion", media: "imagen", titulo: "Sesión de fotos" },
@@ -80,85 +75,174 @@ const fotos = [
 
 
 /* ============================= */
-/* GALERÍA */
+/* CARRUSEL DE 3 IMÁGENES */
 /* ============================= */
 
 const galeriaGrid = document.getElementById("galeriaGrid");
 
-function crearMedia(item, modoLightbox = false) {
-  let elemento;
+let filtroActual = "todo";
+let listaActual = [];
+let indiceActual = 0;
 
-  if (item.media === "video") {
-    elemento = document.createElement("video");
-    elemento.src = item.src;
-    elemento.preload = "metadata";
-    elemento.playsInline = true;
-
-    if (modoLightbox) {
-      elemento.controls = true;
-      elemento.autoplay = true;
-    } else {
-      elemento.muted = true;
-      elemento.loop = true;
-    }
-  } else {
-    elemento = document.createElement("img");
-    elemento.src = item.src;
-    elemento.alt = item.titulo || "Cadetes de Honor Huancayo";
-    elemento.loading = "lazy";
-    elemento.decoding = "async";
+function obtenerListaFiltrada() {
+  if (filtroActual === "todo") {
+    return fotos;
   }
 
-  elemento.onerror = () => {
-    const contenedor = elemento.closest(".galeria-item");
+  return fotos.filter((item) => item.tipo === filtroActual);
+}
 
-    if (contenedor) {
-      contenedor.innerHTML = `
-        <div class="error-media">
-          No se pudo cargar:<br>
-          ${item.src}
-        </div>
-      `;
+function normalizarIndice(indice, total) {
+  if (indice < 0) return total - 1;
+  if (indice >= total) return 0;
+  return indice;
+}
+
+function crearMedia(item, grande = false) {
+  let media;
+
+  if (item.media === "video") {
+    media = document.createElement("video");
+    media.src = item.src;
+    media.playsInline = true;
+    media.preload = "metadata";
+
+    if (grande) {
+      media.controls = true;
+      media.autoplay = true;
+    } else {
+      media.muted = true;
+      media.loop = true;
     }
+  } else {
+    media = document.createElement("img");
+    media.src = item.src;
+    media.alt = item.titulo || "Cadetes de Honor Huancayo";
+    media.loading = "lazy";
+    media.decoding = "async";
+  }
 
+  media.onerror = () => {
     console.error("No se pudo cargar:", item.src);
   };
 
-  return elemento;
+  return media;
+}
+
+function crearCard(item, posicion, indice) {
+  const card = document.createElement("div");
+  card.classList.add("carousel-card", posicion);
+
+  const media = crearMedia(item);
+  card.appendChild(media);
+
+  if (posicion === "centro") {
+    const info = document.createElement("div");
+    info.classList.add("carousel-info");
+
+    info.innerHTML = `
+      <strong>${item.titulo}</strong>
+      <span>Toca la imagen para verla en pantalla completa</span>
+    `;
+
+    card.appendChild(info);
+
+    card.addEventListener("click", () => {
+      abrirLightbox(listaActual, indiceActual);
+    });
+  }
+
+  if (posicion === "izquierda") {
+    card.addEventListener("click", () => {
+      cambiarImagen(-1);
+    });
+  }
+
+  if (posicion === "derecha") {
+    card.addEventListener("click", () => {
+      cambiarImagen(1);
+    });
+  }
+
+  return card;
 }
 
 function cargarGaleria(filtro = "todo") {
   if (!galeriaGrid) return;
 
+  filtroActual = filtro;
+  listaActual = obtenerListaFiltrada();
+  indiceActual = 0;
+
+  renderCarrusel();
+}
+
+function renderCarrusel() {
+  if (!galeriaGrid) return;
+
+  galeriaGrid.classList.add("carousel-modo");
   galeriaGrid.innerHTML = "";
 
-  const fotosFiltradas =
-    filtro === "todo"
-      ? fotos
-      : fotos.filter((foto) => foto.tipo === filtro);
+  if (listaActual.length === 0) {
+    galeriaGrid.innerHTML = `
+      <div class="error-media">
+        No hay imágenes en esta categoría.
+      </div>
+    `;
+    return;
+  }
 
-  fotosFiltradas.forEach((foto, index) => {
-    const item = document.createElement("div");
-    item.classList.add("galeria-item");
+  const total = listaActual.length;
 
-    if (foto.media === "video") {
-      item.classList.add("video");
-    }
+  const indiceIzquierda = normalizarIndice(indiceActual - 1, total);
+  const indiceCentro = normalizarIndice(indiceActual, total);
+  const indiceDerecha = normalizarIndice(indiceActual + 1, total);
 
-    const media = crearMedia(foto);
-    item.appendChild(media);
+  const contenedor = document.createElement("div");
+  contenedor.classList.add("carousel-contenedor");
 
-    const etiqueta = document.createElement("div");
-    etiqueta.classList.add("galeria-etiqueta");
-    etiqueta.textContent = foto.titulo;
-    item.appendChild(etiqueta);
+  const escenario = document.createElement("div");
+  escenario.classList.add("carousel-escenario");
 
-    galeriaGrid.appendChild(item);
+  const btnAnterior = document.createElement("button");
+  btnAnterior.classList.add("carousel-flecha", "prev");
+  btnAnterior.textContent = "‹";
+  btnAnterior.setAttribute("aria-label", "Imagen anterior");
 
-    item.addEventListener("click", () => {
-      abrirLightbox(fotosFiltradas, index);
-    });
-  });
+  const btnSiguiente = document.createElement("button");
+  btnSiguiente.classList.add("carousel-flecha", "next");
+  btnSiguiente.textContent = "›";
+  btnSiguiente.setAttribute("aria-label", "Imagen siguiente");
+
+  escenario.appendChild(crearCard(listaActual[indiceIzquierda], "izquierda", indiceIzquierda));
+  escenario.appendChild(crearCard(listaActual[indiceCentro], "centro", indiceCentro));
+  escenario.appendChild(crearCard(listaActual[indiceDerecha], "derecha", indiceDerecha));
+  escenario.appendChild(btnAnterior);
+  escenario.appendChild(btnSiguiente);
+
+  const contador = document.createElement("div");
+  contador.classList.add("carousel-contador");
+  contador.textContent = `${indiceCentro + 1} / ${total}`;
+
+  const ayuda = document.createElement("div");
+  ayuda.classList.add("carousel-ayuda");
+  ayuda.textContent = "Desliza o usa las flechas para cambiar";
+
+  contenedor.appendChild(escenario);
+  contenedor.appendChild(contador);
+  contenedor.appendChild(ayuda);
+
+  galeriaGrid.appendChild(contenedor);
+
+  btnAnterior.addEventListener("click", () => cambiarImagen(-1));
+  btnSiguiente.addEventListener("click", () => cambiarImagen(1));
+}
+
+function cambiarImagen(direccion) {
+  const total = listaActual.length;
+
+  indiceActual = normalizarIndice(indiceActual + direccion, total);
+  renderCarrusel();
 }
 
 cargarGaleria();
@@ -184,12 +268,12 @@ botonesFiltro.forEach((boton) => {
 /* LIGHTBOX */
 /* ============================= */
 
-let indiceActual = 0;
-let listaActual = [];
+let listaLightbox = [];
+let indiceLightbox = 0;
 
 function abrirLightbox(lista, indice) {
-  listaActual = lista;
-  indiceActual = indice;
+  listaLightbox = lista;
+  indiceLightbox = indice;
 
   const lightbox = document.createElement("div");
   lightbox.classList.add("lightbox");
@@ -203,7 +287,6 @@ function abrirLightbox(lista, indice) {
       <div id="mediaLightbox"></div>
 
       <button class="next-lightbox" id="nextLightbox">›</button>
-
       <div class="contador-lightbox" id="contadorLightbox"></div>
     </div>
   `;
@@ -211,11 +294,11 @@ function abrirLightbox(lista, indice) {
   document.body.appendChild(lightbox);
   document.body.style.overflow = "hidden";
 
-  actualizarMediaLightbox();
+  actualizarLightbox();
 
   document.getElementById("cerrarLightbox").addEventListener("click", cerrarLightbox);
-  document.getElementById("prevLightbox").addEventListener("click", imagenAnterior);
-  document.getElementById("nextLightbox").addEventListener("click", imagenSiguiente);
+  document.getElementById("prevLightbox").addEventListener("click", lightboxAnterior);
+  document.getElementById("nextLightbox").addEventListener("click", lightboxSiguiente);
 
   lightbox.addEventListener("click", (e) => {
     if (e.target.id === "lightbox") {
@@ -233,27 +316,17 @@ function cerrarLightbox() {
   }
 }
 
-function imagenAnterior() {
-  indiceActual--;
-
-  if (indiceActual < 0) {
-    indiceActual = listaActual.length - 1;
-  }
-
-  actualizarMediaLightbox();
+function lightboxAnterior() {
+  indiceLightbox = normalizarIndice(indiceLightbox - 1, listaLightbox.length);
+  actualizarLightbox();
 }
 
-function imagenSiguiente() {
-  indiceActual++;
-
-  if (indiceActual >= listaActual.length) {
-    indiceActual = 0;
-  }
-
-  actualizarMediaLightbox();
+function lightboxSiguiente() {
+  indiceLightbox = normalizarIndice(indiceLightbox + 1, listaLightbox.length);
+  actualizarLightbox();
 }
 
-function actualizarMediaLightbox() {
+function actualizarLightbox() {
   const contenedor = document.getElementById("mediaLightbox");
   const contador = document.getElementById("contadorLightbox");
 
@@ -261,24 +334,28 @@ function actualizarMediaLightbox() {
 
   contenedor.innerHTML = "";
 
-  const itemActual = listaActual[indiceActual];
+  const itemActual = listaLightbox[indiceLightbox];
   const media = crearMedia(itemActual, true);
 
   contenedor.appendChild(media);
 
   if (contador) {
-    contador.textContent = `${itemActual.titulo} • ${indiceActual + 1} / ${listaActual.length}`;
+    contador.textContent = `${itemActual.titulo} • ${indiceLightbox + 1} / ${listaLightbox.length}`;
   }
 }
 
 document.addEventListener("keydown", (e) => {
   const lightbox = document.getElementById("lightbox");
 
-  if (!lightbox) return;
+  if (lightbox) {
+    if (e.key === "Escape") cerrarLightbox();
+    if (e.key === "ArrowLeft") lightboxAnterior();
+    if (e.key === "ArrowRight") lightboxSiguiente();
+    return;
+  }
 
-  if (e.key === "Escape") cerrarLightbox();
-  if (e.key === "ArrowLeft") imagenAnterior();
-  if (e.key === "ArrowRight") imagenSiguiente();
+  if (e.key === "ArrowLeft") cambiarImagen(-1);
+  if (e.key === "ArrowRight") cambiarImagen(1);
 });
 
 
@@ -286,26 +363,28 @@ document.addEventListener("keydown", (e) => {
 /* DESLIZAR EN CELULAR */
 /* ============================= */
 
-let inicioToque = 0;
-let finToque = 0;
+let toqueInicio = 0;
+let toqueFinal = 0;
 
 document.addEventListener("touchstart", (e) => {
-  inicioToque = e.changedTouches[0].screenX;
+  toqueInicio = e.changedTouches[0].screenX;
 });
 
 document.addEventListener("touchend", (e) => {
+  toqueFinal = e.changedTouches[0].screenX;
+
+  const diferencia = toqueInicio - toqueFinal;
+
+  if (Math.abs(diferencia) < 60) return;
+
   const lightbox = document.getElementById("lightbox");
 
-  if (!lightbox) return;
-
-  finToque = e.changedTouches[0].screenX;
-
-  if (inicioToque - finToque > 60) {
-    imagenSiguiente();
-  }
-
-  if (finToque - inicioToque > 60) {
-    imagenAnterior();
+  if (lightbox) {
+    if (diferencia > 0) lightboxSiguiente();
+    else lightboxAnterior();
+  } else {
+    if (diferencia > 0) cambiarImagen(1);
+    else cambiarImagen(-1);
   }
 });
 
@@ -332,7 +411,7 @@ elementosAnimados.forEach((elemento) => {
 
 
 /* ============================= */
-/* MENÚ ACTIVO AL BAJAR */
+/* MENÚ ACTIVO */
 /* ============================= */
 
 const secciones = document.querySelectorAll("header, section[id]");
