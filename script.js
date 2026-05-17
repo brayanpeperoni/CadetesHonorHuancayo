@@ -1,3 +1,4 @@
+
 /* ============================= */
 /* MENÚ MÓVIL */
 /* ============================= */
@@ -174,7 +175,7 @@ botonesFiltro.forEach((boton) => {
 });
 
 /* ============================= */
-/* LIGHTBOX PREMIUM */
+/* LIGHTBOX CARRUSEL PROFESIONAL */
 /* ============================= */
 
 let indiceActual = 0;
@@ -184,37 +185,41 @@ function abrirLightbox(lista, indice) {
   listaActual = lista;
   indiceActual = indice;
 
-  const lightboxExistente = document.getElementById("lightbox");
-  if (lightboxExistente) lightboxExistente.remove();
+  const lightboxAnterior = document.getElementById("lightbox");
+
+  if (lightboxAnterior) {
+    lightboxAnterior.remove();
+  }
 
   const lightbox = document.createElement("div");
   lightbox.classList.add("lightbox");
   lightbox.id = "lightbox";
 
   lightbox.innerHTML = `
-    <div class="lightbox-pro">
+    <div class="carousel-pro">
 
-      <div class="lightbox-header">
-        <div>
-          <p class="lightbox-subtitulo">Cadetes de Honor Huancayo</p>
-          <h3 id="tituloLightbox">Galería profesional</h3>
-        </div>
+      <button class="cerrar-lightbox" id="cerrarLightbox">×</button>
 
-        <button class="cerrar-lightbox" id="cerrarLightbox">×</button>
+      <div class="carousel-titulo">
+        <span>Galería profesional</span>
+        <h3 id="tituloLightbox">Evento especial</h3>
       </div>
 
-      <div class="lightbox-body">
-        <button class="prev-lightbox" id="prevLightbox">‹</button>
+      <div class="carousel-frame">
 
-        <div class="media-stage" id="mediaLightbox"></div>
+        <button class="flecha-carousel flecha-izquierda" id="prevLightbox">
+          ‹
+        </button>
 
-        <button class="next-lightbox" id="nextLightbox">›</button>
+        <div class="carousel-imagenes" id="mediaLightbox"></div>
+
+        <button class="flecha-carousel flecha-derecha" id="nextLightbox">
+          ›
+        </button>
+
       </div>
 
-      <div class="lightbox-footer">
-        <div class="contador-lightbox" id="contadorLightbox"></div>
-        <div class="miniaturas-lightbox" id="miniaturasLightbox"></div>
-      </div>
+      <div class="contador-lightbox" id="contadorLightbox"></div>
 
     </div>
   `;
@@ -264,27 +269,23 @@ function imagenSiguiente() {
   actualizarMediaLightbox();
 }
 
-function crearSlidePremium(item, clase, accion) {
+function crearSlideCarrusel(item, clase, accion) {
   const slide = document.createElement("div");
-  slide.classList.add("slide-premium", clase);
+  slide.classList.add("slide-carousel", clase);
 
-  const media = crearMedia(item, clase === "activo");
+  const media = crearMedia(item, clase === "centro");
 
-  if (item.media === "video" && clase !== "activo") {
+  if (item.media === "video" && clase !== "centro") {
     media.controls = false;
     media.autoplay = false;
     media.muted = true;
   }
 
-  if (clase !== "activo") {
+  if (clase !== "centro") {
     slide.addEventListener("click", accion);
   }
 
-  const capa = document.createElement("div");
-  capa.classList.add("slide-capa");
-
   slide.appendChild(media);
-  slide.appendChild(capa);
 
   return slide;
 }
@@ -293,7 +294,6 @@ function actualizarMediaLightbox() {
   const contenedor = document.getElementById("mediaLightbox");
   const contador = document.getElementById("contadorLightbox");
   const titulo = document.getElementById("tituloLightbox");
-  const miniaturas = document.getElementById("miniaturasLightbox");
 
   if (!contenedor) return;
 
@@ -301,54 +301,41 @@ function actualizarMediaLightbox() {
 
   const total = listaActual.length;
 
-  const indiceAnterior = indiceActual - 1 < 0 ? total - 1 : indiceActual - 1;
-  const indiceSiguiente = indiceActual + 1 >= total ? 0 : indiceActual + 1;
+  const indiceIzquierda = indiceActual - 1 < 0 ? total - 1 : indiceActual - 1;
+  const indiceDerecha = indiceActual + 1 >= total ? 0 : indiceActual + 1;
 
-  const itemAnterior = listaActual[indiceAnterior];
-  const itemActual = listaActual[indiceActual];
-  const itemSiguiente = listaActual[indiceSiguiente];
+  const itemIzquierda = listaActual[indiceIzquierda];
+  const itemCentro = listaActual[indiceActual];
+  const itemDerecha = listaActual[indiceDerecha];
 
-  const slideAnterior = crearSlidePremium(itemAnterior, "lateral", imagenAnterior);
-  const slideCentro = crearSlidePremium(itemActual, "activo", null);
-  const slideSiguiente = crearSlidePremium(itemSiguiente, "lateral", imagenSiguiente);
+  const slideIzquierda = crearSlideCarrusel(
+    itemIzquierda,
+    "lado lado-izquierdo",
+    imagenAnterior
+  );
 
-  contenedor.appendChild(slideAnterior);
+  const slideCentro = crearSlideCarrusel(
+    itemCentro,
+    "centro",
+    null
+  );
+
+  const slideDerecha = crearSlideCarrusel(
+    itemDerecha,
+    "lado lado-derecho",
+    imagenSiguiente
+  );
+
+  contenedor.appendChild(slideIzquierda);
   contenedor.appendChild(slideCentro);
-  contenedor.appendChild(slideSiguiente);
+  contenedor.appendChild(slideDerecha);
 
   if (titulo) {
-    titulo.textContent = itemActual.titulo;
+    titulo.textContent = itemCentro.titulo;
   }
 
   if (contador) {
-    contador.textContent = `${indiceActual + 1} de ${listaActual.length}`;
-  }
-
-  if (miniaturas) {
-    miniaturas.innerHTML = "";
-
-    listaActual.forEach((item, index) => {
-      const mini = document.createElement("button");
-      mini.classList.add("miniatura-btn");
-
-      if (index === indiceActual) {
-        mini.classList.add("activo");
-      }
-
-      if (item.media === "video") {
-        mini.innerHTML = "▶";
-        mini.classList.add("mini-video");
-      } else {
-        mini.style.backgroundImage = `url('${item.src}')`;
-      }
-
-      mini.addEventListener("click", () => {
-        indiceActual = index;
-        actualizarMediaLightbox();
-      });
-
-      miniaturas.appendChild(mini);
-    });
+    contador.textContent = `${indiceActual + 1} / ${listaActual.length}`;
   }
 }
 
