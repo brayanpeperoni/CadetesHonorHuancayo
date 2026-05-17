@@ -1,1464 +1,547 @@
 
-:root {
-  --negro: #050505;
-  --negro-profundo: #020202;
-  --negro-card: #0b0b0b;
-  --blanco: #ffffff;
-  --gris-texto: #d8d8d8;
-  --gris-suave: #bdbdbd;
-  --dorado: #d4af37;
-  --dorado-claro: #fff1a8;
-  --dorado-fuerte: #f0c94d;
-  --vidrio: rgba(255, 255, 255, 0.075);
-  --vidrio-fuerte: rgba(255, 255, 255, 0.12);
-  --borde: rgba(212, 175, 55, 0.34);
-  --sombra: rgba(0, 0, 0, 0.65);
+  /* ============================= */
+/* MENÚ MÓVIL */
+/* ============================= */
+
+const btnMenu = document.getElementById("btnMenu");
+const navLinks = document.getElementById("navLinks");
+
+if (btnMenu && navLinks) {
+  btnMenu.addEventListener("click", () => {
+    navLinks.classList.toggle("abierto");
+
+    if (navLinks.classList.contains("abierto")) {
+      btnMenu.textContent = "×";
+    } else {
+      btnMenu.textContent = "☰";
+    }
+  });
+
+  document.querySelectorAll(".nav-links a").forEach((link) => {
+    link.addEventListener("click", () => {
+      navLinks.classList.remove("abierto");
+      btnMenu.textContent = "☰";
+    });
+  });
 }
 
-/* GENERAL */
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  font-family: Arial, Helvetica, sans-serif;
-  color: var(--blanco);
-  background:
-    radial-gradient(circle at top left, rgba(212, 175, 55, 0.18), transparent 34%),
-    radial-gradient(circle at bottom right, rgba(255, 255, 255, 0.08), transparent 30%),
-    linear-gradient(135deg, #020202, #080808, #151006);
-  overflow-x: hidden;
-}
-
-img,
-video {
-  max-width: 100%;
-  display: block;
-}
-
-a {
-  color: inherit;
-}
-
-button {
-  font-family: inherit;
-}
-
-/* FONDO */
-
-.fondo-luces {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: -1;
-}
-
-.fondo-luces::before,
-.fondo-luces::after {
-  content: "";
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(42px);
-}
-
-.fondo-luces::before {
-  width: 300px;
-  height: 300px;
-  top: 90px;
-  right: -120px;
-  background: rgba(212, 175, 55, 0.23);
-}
-
-.fondo-luces::after {
-  width: 280px;
-  height: 280px;
-  left: -110px;
-  bottom: 110px;
-  background: rgba(255, 255, 255, 0.08);
-}
-
-/* NAVBAR */
-
-.navbar {
-  width: calc(100% - 22px);
-  min-height: 86px;
-
-  position: fixed;
-  top: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 3000;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  padding: 12px 14px;
-  border-radius: 26px;
-
-  background:
-    linear-gradient(135deg, rgba(0, 0, 0, 0.94), rgba(18, 14, 3, 0.96));
-  border: 1.5px solid rgba(212, 175, 55, 0.52);
-
-  backdrop-filter: blur(18px);
-  box-shadow:
-    0 0 35px rgba(212, 175, 55, 0.16),
-    0 18px 45px rgba(0, 0, 0, 0.72),
-    inset 0 0 18px rgba(255, 255, 255, 0.04);
-}
-
-.marca {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  text-decoration: none;
-}
-
-.marca-img {
-  width: 60px;
-  height: 60px;
-  min-width: 60px;
-
-  border-radius: 50%;
-  object-fit: cover;
-
-  border: 2px solid rgba(212, 175, 55, 0.95);
-  padding: 3px;
-  background: #000;
-
-  box-shadow:
-    0 0 18px rgba(212, 175, 55, 0.55),
-    0 0 38px rgba(212, 175, 55, 0.22);
-}
-
-.marca-texto {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.marca strong {
-  font-size: 17px;
-  font-weight: 900;
-  line-height: 1.05;
-  color: #ffffff;
-  text-shadow: 0 0 12px rgba(212, 175, 55, 0.25);
-}
-
-.marca span {
-  font-size: 14px;
-  font-weight: 800;
-  color: var(--dorado-claro);
-  margin-top: 4px;
-}
-
-.btn-menu {
-  width: 52px;
-  height: 52px;
-
-  border: none;
-  border-radius: 18px;
-
-  cursor: pointer;
-  color: #111;
-  background: linear-gradient(135deg, var(--dorado), var(--dorado-claro));
-
-  font-size: 30px;
-  font-weight: 900;
-
-  box-shadow: 0 0 24px rgba(212, 175, 55, 0.45);
-}
-
-.nav-links {
-  position: absolute;
-  top: 98px;
-  left: 0;
-  width: 100%;
-
-  display: none;
-  flex-direction: column;
-  gap: 10px;
-
-  padding: 15px;
-  border-radius: 24px;
-
-  background: rgba(5, 5, 5, 0.98);
-  border: 1px solid rgba(212, 175, 55, 0.45);
-  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.70);
-}
-
-.nav-links.abierto {
-  display: flex;
-}
-
-.nav-links a {
-  text-align: center;
-  text-decoration: none;
-
-  padding: 15px 16px;
-  border-radius: 18px;
-
-  color: #ffffff;
-  font-size: 16px;
-  font-weight: 900;
-
-  transition: 0.3s ease;
-}
-
-.nav-links a:hover,
-.nav-links a.activo {
-  color: #111111;
-  background: linear-gradient(135deg, var(--dorado), var(--dorado-claro));
-  box-shadow:
-    0 0 18px rgba(212, 175, 55, 0.45),
-    inset 0 0 10px rgba(255, 255, 255, 0.25);
-}
-
-/* HERO */
-
-.hero {
-  min-height: 100vh;
-  padding: 128px 16px 62px;
-  position: relative;
-  overflow: hidden;
-}
-
-.hero::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(120deg, transparent, rgba(212, 175, 55, 0.14), transparent);
-  transform: translateX(-100%);
-  animation: luzPasando 5s linear infinite;
-}
-
-.hero-contenido {
-  position: relative;
-  z-index: 2;
-
-  width: min(100%, 1180px);
-  margin: auto;
-
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 34px;
-  align-items: center;
-}
-
-.etiqueta,
-.subtitulo {
-  display: inline-block;
-
-  margin-bottom: 15px;
-  padding: 9px 15px;
-  border-radius: 999px;
-
-  color: var(--dorado-claro);
-  background: rgba(212, 175, 55, 0.12);
-  border: 1px solid rgba(212, 175, 55, 0.38);
-
-  font-size: 12px;
-  font-weight: 900;
-  letter-spacing: 0.5px;
-}
-
-.hero-texto h1 {
-  margin-bottom: 18px;
-
-  font-size: clamp(2.25rem, 11vw, 5rem);
-  line-height: 1.04;
-
-  text-shadow: 0 0 28px rgba(0, 0, 0, 0.90);
-}
-
-.hero-texto h1 span {
-  display: block;
-
-  background: linear-gradient(90deg, var(--dorado), var(--dorado-claro), var(--dorado));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-
-  animation: brilloTexto 3s infinite linear;
-}
-
-.hero-texto p {
-  max-width: 680px;
-  margin-bottom: 24px;
-
-  color: #eeeeee;
-  font-size: 16px;
-  line-height: 1.75;
-}
-
-.hero-botones {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 12px;
-  margin-bottom: 26px;
-}
-
-.btn-principal,
-.btn-secundario {
-  min-height: 54px;
-  padding: 15px 22px;
-  border-radius: 999px;
-
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-
-  text-decoration: none;
-  font-weight: 900;
-  font-size: 15px;
-
-  transition: 0.3s ease;
-}
-
-.btn-principal {
-  position: relative;
-  overflow: hidden;
-
-  color: #111;
-  background: linear-gradient(135deg, var(--dorado), var(--dorado-claro));
-  box-shadow: 0 0 30px rgba(212, 175, 55, 0.38);
-}
-
-.btn-principal::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -80%;
-
-  width: 60%;
-  height: 100%;
-
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.65), transparent);
-  transform: skewX(-25deg);
-  transition: 0.5s;
-}
-
-.btn-principal:hover::before {
-  left: 130%;
-}
-
-.btn-secundario {
-  color: var(--blanco);
-  background: rgba(255, 255, 255, 0.075);
-  border: 1px solid rgba(255, 255, 255, 0.24);
-  backdrop-filter: blur(10px);
-}
-
-.btn-principal:hover,
-.btn-secundario:hover {
-  transform: translateY(-3px);
-}
-
-.hero-foto {
-  display: flex;
-  justify-content: center;
-}
-
-.foto-principal {
-  width: min(82vw, 345px);
-  height: 430px;
-
-  overflow: hidden;
-  padding: 10px;
-  border-radius: 36px;
-
-  background:
-    linear-gradient(135deg, rgba(212, 175, 55, 0.42), rgba(255, 255, 255, 0.08)),
-    rgba(0, 0, 0, 0.52);
-
-  border: 1px solid rgba(212, 175, 55, 0.50);
-  box-shadow: 0 0 50px rgba(212, 175, 55, 0.28);
-
-  animation: flotar 3.8s ease-in-out infinite alternate;
-}
-
-.foto-principal img {
-  width: 100%;
-  height: 100%;
-  border-radius: 27px;
-  object-fit: cover;
-}
-
-/* SECCIONES */
-
-.seccion {
-  width: min(100% - 32px, 1120px);
-  margin: auto;
-  padding: 70px 0;
-  text-align: center;
-}
-
-.seccion h2 {
-  margin-bottom: 16px;
-
-  font-size: clamp(1.8rem, 7vw, 3rem);
-  line-height: 1.15;
-
-  text-shadow: 0 0 18px rgba(212, 175, 55, 0.35);
-}
-
-.seccion p {
-  max-width: 820px;
-  margin: auto;
-
-  color: var(--gris-texto);
-  font-size: 16px;
-  line-height: 1.75;
-}
-
-/* CONTACTOS */
-
-.contactos-rapidos {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 12px;
-  padding-top: 38px;
-}
-
-.contacto-card {
-  display: flex;
-  align-items: center;
-  gap: 13px;
-
-  padding: 16px;
-  border-radius: 24px;
-
-  text-align: left;
-  text-decoration: none;
-
-  background: var(--vidrio);
-  border: 1px solid rgba(212, 175, 55, 0.28);
-  backdrop-filter: blur(12px);
-
-  transition: 0.3s ease;
-}
-
-.contacto-card:hover {
-  transform: translateY(-4px);
-  border-color: rgba(255, 241, 168, 0.75);
-  box-shadow: 0 0 25px rgba(212, 175, 55, 0.22);
-}
-
-.contacto-card span {
-  width: 50px;
-  height: 50px;
-  min-width: 50px;
-
-  display: grid;
-  place-items: center;
-
-  border-radius: 50%;
-  color: #111;
-  font-size: 23px;
-
-  background: linear-gradient(135deg, var(--dorado), var(--dorado-claro));
-}
-
-.contacto-card strong {
-  color: var(--dorado-claro);
-  font-size: 13px;
-  text-transform: uppercase;
-}
-
-.contacto-card p {
-  margin-top: 3px;
-  color: var(--blanco);
-  font-size: 14px;
-}
-
-/* SERVICIOS */
-
-.cards {
-  margin-top: 32px;
-
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 16px;
-}
-
-.card {
-  position: relative;
-  overflow: hidden;
-
-  padding: 28px 20px;
-  border-radius: 28px;
-
-  background:
-    linear-gradient(145deg, rgba(255, 255, 255, 0.105), rgba(255, 255, 255, 0.03));
-  border: 1px solid rgba(212, 175, 55, 0.26);
-  backdrop-filter: blur(12px);
-
-  box-shadow: 0 15px 36px rgba(0, 0, 0, 0.34);
-  transition: 0.35s ease;
-}
-
-.card::before {
-  content: "";
-  position: absolute;
-  width: 130px;
-  height: 130px;
-  top: -45px;
-  right: -45px;
-
-  background: radial-gradient(circle, rgba(212, 175, 55, 0.20), transparent 65%);
-}
-
-.card:hover {
-  transform: translateY(-8px);
-  border-color: rgba(255, 241, 168, 0.75);
-  box-shadow: 0 0 30px rgba(212, 175, 55, 0.24);
-}
-
-.icono-card {
-  width: 58px;
-  height: 58px;
-
-  margin: 0 auto 14px;
-  border-radius: 19px;
-
-  display: grid;
-  place-items: center;
-
-  font-size: 27px;
-  background: rgba(212, 175, 55, 0.14);
-  border: 1px solid rgba(212, 175, 55, 0.32);
-}
-
-.card h3 {
-  margin-bottom: 10px;
-  color: var(--dorado-claro);
-  font-size: 20px;
-}
-
+/* ============================= */
+/* LISTA DE FOTOS Y VIDEO */
+/* ============================= */
+
+const fotos = [
+  /* FIESTA */
+  { src: "Fiesta/IMG-20260512-WA0126.jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Fiesta de quince años" },
+  { src: "Fiesta/IMG-20260512-WA0127.jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Entrada de honor" },
+  { src: "Fiesta/IMG-20260512-WA0128.jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Evento especial" },
+  { src: "Fiesta/IMG-20260512-WA0129.jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Presentación formal" },
+  { src: "Fiesta/IMG-20260512-WA0130.jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Cadetes en evento" },
+  { src: "Fiesta/IMG-20260512-WA0131.jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Celebración XV" },
+  { src: "Fiesta/IMG-20260512-WA0132.jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Evento elegante" },
+  { src: "Fiesta/IMG-20260512-WA0133.jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Acompañamiento especial" },
+  { src: "Fiesta/IMG-20260512-WA0134.jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Noche especial" },
+  { src: "Fiesta/IMG-20260512-WA0135.jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Presentación de cadetes" },
+  { src: "Fiesta/IMG-20260512-WA0136.jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Fiesta elegante" },
+  { src: "Fiesta/IMG-20260512-WA0137.jpg.jpeg", tipo: "evento", media: "imagen", titulo: "XV años" },
+  { src: "Fiesta/IMG-20260512-WA0138(1).jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Evento XV" },
+  { src: "Fiesta/IMG-20260512-WA0139(1).jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Cadetes de honor" },
+  { src: "Fiesta/IMG-20260512-WA0140(1).jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Momento especial" },
+  { src: "Fiesta/IMG-20260512-WA0141(1).jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Celebración" },
+  { src: "Fiesta/IMG-20260512-WA0142(1).jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Baile y presentación" },
+  { src: "Fiesta/IMG-20260512-WA0143(1).jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Recuerdo especial" },
+  { src: "Fiesta/IMG-20260512-WA0144.jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Ceremonia" },
+  { src: "Fiesta/IMG-20260512-WA0145.jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Cadetes Huancayo" },
+  { src: "Fiesta/IMG-20260512-WA0146(1).jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Evento familiar" },
+  { src: "Fiesta/IMG-20260512-WA0147.jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Presentación" },
+  { src: "Fiesta/IMG-20260512-WA0148.jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Noche inolvidable" },
+  { src: "Fiesta/IMG-20260512-WA0149.jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Servicio de cadetes" },
+  { src: "Fiesta/IMG-20260512-WA0150.jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Fiesta XV" },
+  { src: "Fiesta/IMG-20260512-WA0151.jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Evento de quince años" },
+  { src: "Fiesta/IMG-20260512-WA0152.jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Acompañamiento elegante" },
+  { src: "Fiesta/IMG-20260512-WA0153.jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Ceremonia especial" },
+
+  /* SESIÓN DE FOTOS */
+  { src: "SesionDeFotos/IMG-20260512-WA0124(2).jpg.jpeg", tipo: "sesion", media: "imagen", titulo: "Sesión de fotos" },
+  { src: "SesionDeFotos/IMG-20260512-WA0154.jpg.jpeg", tipo: "sesion", media: "imagen", titulo: "Fotografía especial" },
+  { src: "SesionDeFotos/IMG-20260512-WA0155.jpg.jpeg", tipo: "sesion", media: "imagen", titulo: "Recuerdo fotográfico" },
+  { src: "SesionDeFotos/IMG-20260512-WA0156.jpg.jpeg", tipo: "sesion", media: "imagen", titulo: "Sesión elegante" },
+  { src: "SesionDeFotos/IMG-20260512-WA0157.jpg.jpeg", tipo: "sesion", media: "imagen", titulo: "Foto con cadetes" },
+  { src: "SesionDeFotos/IMG-20260512-WA0158.jpg.jpeg", tipo: "sesion", media: "imagen", titulo: "Momento fotográfico" },
+  { src: "SesionDeFotos/IMG-20260512-WA0159.jpg.jpeg", tipo: "sesion", media: "imagen", titulo: "Sesión XV" },
+  { src: "SesionDeFotos/IMG-20260512-WA0160.jpg.jpeg", tipo: "sesion", media: "imagen", titulo: "Fotografía de recuerdo" },
+  { src: "SesionDeFotos/VID-20260512-WA0161.mp4", tipo: "sesion", media: "video", titulo: "Video de sesión" },
+
+  /* SORPRESA */
+  { src: "Sorpresa/IMG-20260512-WA0162.jpg.jpeg", tipo: "sorpresa", media: "imagen", titulo: "Sorpresa especial" },
+  { src: "Sorpresa/IMG-20260512-WA0163.jpg.jpeg", tipo: "sorpresa", media: "imagen", titulo: "Momento sorpresa" },
+  { src: "Sorpresa/IMG-20260512-WA0164.jpg.jpeg", tipo: "sorpresa", media: "imagen", titulo: "Detalle para quinceañera" },
+  { src: "Sorpresa/IMG-20260512-WA0165.jpg.jpeg", tipo: "sorpresa", media: "imagen", titulo: "Sorpresa XV" }
+];
+
+/* ============================= */
 /* GALERÍA */
-
-.texto-galeria {
-  margin-bottom: 18px !important;
-}
-
-.galeria-filtros {
-  margin: 24px 0 30px;
-
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.filtro {
-  padding: 12px 18px;
-
-  border-radius: 999px;
-  border: 1px solid rgba(212, 175, 55, 0.45);
-
-  color: var(--blanco);
-  background: rgba(255, 255, 255, 0.075);
-
-  cursor: pointer;
-  font-weight: 900;
-  font-size: 13px;
-
-  transition: 0.3s ease;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
-}
-
-.filtro:hover,
-.filtro.activo {
-  color: #111;
-  background: linear-gradient(135deg, var(--dorado), var(--dorado-claro));
-  transform: translateY(-3px);
-  box-shadow: 0 12px 30px rgba(212, 175, 55, 0.35);
-}
-
-.galeria {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-}
-
-.galeria-item {
-  position: relative;
-
-  height: 190px;
-  overflow: hidden;
-  border-radius: 24px;
-
-  background: #111;
-  border: 1px solid rgba(212, 175, 55, 0.27);
-  cursor: pointer;
-
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.38);
-  transition: 0.35s ease;
-}
-
-.galeria-item:nth-child(3n + 1) {
-  grid-row: span 2;
-  height: 392px;
-}
-
-.galeria-item img,
-.galeria-item video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: 0.45s ease;
-}
-
-.galeria-item::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-
-  background:
-    linear-gradient(to top, rgba(0, 0, 0, 0.78), rgba(0, 0, 0, 0.18), transparent);
-  opacity: 0.9;
-}
-
-.galeria-item:hover {
-  transform: translateY(-6px);
-  border-color: rgba(255, 241, 168, 0.78);
-  box-shadow: 0 20px 45px rgba(212, 175, 55, 0.20);
-}
-
-.galeria-item:hover img,
-.galeria-item:hover video {
-  transform: scale(1.08);
-  filter: brightness(1.08);
-}
-
-.galeria-etiqueta {
-  position: absolute;
-  left: 12px;
-  right: 12px;
-  bottom: 12px;
-  z-index: 3;
-
-  padding: 9px 12px;
-  border-radius: 999px;
-
-  color: #111;
-  background: rgba(255, 241, 168, 0.92);
-
-  font-size: 12px;
-  font-weight: 900;
-  text-align: center;
-}
-
-/* CARRUSEL PROFESIONAL */
-
-.lightbox {
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  padding: 16px;
-
-  background:
-    radial-gradient(circle at top, rgba(212, 175, 55, 0.22), transparent 35%),
-    linear-gradient(135deg, rgba(0, 0, 0, 0.97), rgba(10, 10, 10, 0.98));
-
-  animation: aparecer 0.25s ease;
-}
-
-.carousel-pro {
-  position: relative;
-
-  width: min(1180px, 100%);
-  height: min(90vh, 760px);
-
-  border-radius: 34px;
-
-  background:
-    linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.025)),
-    rgba(7, 7, 7, 0.92);
-
-  border: 1px solid rgba(212, 175, 55, 0.35);
-
-  box-shadow:
-    0 35px 100px rgba(0, 0, 0, 0.85),
-    0 0 55px rgba(212, 175, 55, 0.18),
-    inset 0 0 35px rgba(255, 255, 255, 0.03);
-
-  backdrop-filter: blur(18px);
-
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-
-.carousel-titulo {
-  padding: 22px 76px 12px 26px;
-  text-align: left;
-}
-
-.carousel-titulo span {
-  display: block;
-
-  color: #d4af37;
-  font-size: 12px;
-  font-weight: 900;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-
-  margin-bottom: 6px;
-}
-
-.carousel-titulo h3 {
-  color: #ffffff;
-  font-size: 24px;
-  font-weight: 900;
-  line-height: 1.2;
-}
-
-.cerrar-lightbox {
-  position: absolute;
-  top: 18px;
-  right: 18px;
-  z-index: 30;
-
-  width: 52px;
-  height: 52px;
-
-  border-radius: 50%;
-  border: 1px solid rgba(212, 175, 55, 0.65);
-
-  background: rgba(0, 0, 0, 0.78);
-  color: #fff1a8;
-
-  font-size: 38px;
-  font-weight: 700;
-  line-height: 1;
-
-  cursor: pointer;
-
-  box-shadow:
-    0 0 22px rgba(212, 175, 55, 0.35),
-    inset 0 0 12px rgba(255, 255, 255, 0.06);
-
-  transition: 0.3s ease;
-}
-
-.cerrar-lightbox:hover {
-  background: linear-gradient(135deg, #d4af37, #fff1a8);
-  color: #111;
-  transform: rotate(90deg) scale(1.08);
-}
-
-.carousel-frame {
-  position: relative;
-  flex: 1;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  padding: 10px 78px 18px;
-}
-
-.carousel-imagenes {
-  width: 100%;
-  height: 100%;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  gap: 18px;
-  overflow: hidden;
-}
-
-.slide-carousel {
-  position: relative;
-
-  height: 62vh;
-  border-radius: 28px;
-  overflow: hidden;
-
-  background: #000;
-
-  transition:
-    transform 0.42s ease,
-    opacity 0.42s ease,
-    filter 0.42s ease,
-    box-shadow 0.42s ease;
-
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.slide-carousel img,
-.slide-carousel video {
-  width: 100%;
-  height: 100%;
-  display: block;
-}
-
-.slide-carousel.centro {
-  width: 64%;
-  z-index: 5;
-
-  transform: scale(1);
-
-  border: 1.5px solid rgba(255, 241, 168, 0.75);
-
-  box-shadow:
-    0 0 0 1px rgba(212, 175, 55, 0.35),
-    0 0 55px rgba(212, 175, 55, 0.38),
-    0 28px 80px rgba(0, 0, 0, 0.95);
-}
-
-.slide-carousel.centro img,
-.slide-carousel.centro video {
-  object-fit: contain;
-}
-
-.slide-carousel.lado {
-  width: 24%;
-  z-index: 2;
-
-  opacity: 0.42;
-  transform: scale(0.82);
-
-  filter: brightness(0.65) saturate(0.85) blur(0.4px);
-
-  cursor: pointer;
-}
-
-.slide-carousel.lado img,
-.slide-carousel.lado video {
-  object-fit: cover;
-}
-
-.slide-carousel.lado:hover {
-  opacity: 0.78;
-  transform: scale(0.88);
-  filter: brightness(0.9) saturate(1) blur(0);
-
-  box-shadow:
-    0 0 28px rgba(212, 175, 55, 0.26),
-    0 20px 55px rgba(0, 0, 0, 0.75);
-}
-
-.slide-carousel.lado-izquierdo {
-  margin-left: -8%;
-}
-
-.slide-carousel.lado-derecho {
-  margin-right: -8%;
-}
-
-.flecha-carousel {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-
-  z-index: 25;
-
-  width: 76px;
-  height: 76px;
-
-  border-radius: 50%;
-  border: 2px solid rgba(255, 241, 168, 0.85);
-
-  background:
-    radial-gradient(circle at top, rgba(255, 241, 168, 0.28), transparent 45%),
-    rgba(0, 0, 0, 0.88);
-
-  color: #fff1a8;
-
-  font-size: 78px;
-  font-weight: 300;
-  line-height: 48px;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  cursor: pointer;
-
-  box-shadow:
-    0 0 28px rgba(212, 175, 55, 0.45),
-    0 0 55px rgba(212, 175, 55, 0.22),
-    inset 0 0 16px rgba(255, 255, 255, 0.08);
-
-  transition: 0.3s ease;
-}
-
-.flecha-carousel:hover {
-  background: linear-gradient(135deg, #d4af37, #fff1a8);
-  color: #111;
-
-  transform: translateY(-50%) scale(1.12);
-
-  box-shadow:
-    0 0 42px rgba(212, 175, 55, 0.75),
-    0 0 80px rgba(212, 175, 55, 0.35);
-}
-
-.flecha-izquierda {
-  left: 18px;
-}
-
-.flecha-derecha {
-  right: 18px;
-}
-
-.contador-lightbox {
-  padding: 0 0 20px;
-
-  color: #fff1a8;
-  font-size: 14px;
-  font-weight: 900;
-  text-align: center;
-}
-
-/* CONTACTO FINAL */
-
-.contacto-final {
-  padding-bottom: 96px;
-}
-
-.contacto-final .btn-principal {
-  margin-top: 24px;
-}
-
-/* REDES */
-
-.redes-flotantes {
-  position: fixed;
-  right: 10px;
-  bottom: 96px;
-  z-index: 2500;
-
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.red-social {
-  width: 48px;
-  height: 48px;
-
-  display: grid;
-  place-items: center;
-
-  border-radius: 50%;
-  overflow: hidden;
-  text-decoration: none;
-  color: #111;
-  font-weight: 900;
-
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.55);
-  transition: 0.3s ease;
-
-  animation: respirar 2.6s ease-in-out infinite;
-}
-
-.red-social:hover {
-  transform: scale(1.12);
-}
-
-.whatsapp {
-  background: #14a739;
-  color: #fff;
-}
-
-.tiktok {
-  background: #ffffff;
-  color: #111;
-}
-
-.facebook {
-  background: #1877f2;
-  color: #fff;
-}
-
-.instagram {
-  background: linear-gradient(45deg, #feda75, #d62976, #962fbf, #4f5bd5);
-  color: #fff;
-}
-
-/* BOTÓN WHATSAPP */
-
-.boton-whatsapp-fijo {
-  position: fixed;
-  left: 14px;
-  right: 14px;
-  bottom: 14px;
-  z-index: 2600;
-
-  min-height: 54px;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  border-radius: 999px;
-
-  color: #111;
-  text-decoration: none;
-  font-weight: 900;
-
-  background: linear-gradient(135deg, var(--dorado), var(--dorado-claro));
-  box-shadow: 0 0 32px rgba(212, 175, 55, 0.50);
-}
-
-/* FOOTER */
-
-footer {
-  padding: 28px 16px 88px;
-
-  text-align: center;
-  color: #cfcfcf;
-
-  background: rgba(0, 0, 0, 0.78);
-  border-top: 1px solid rgba(212, 175, 55, 0.25);
-
-  font-size: 14px;
-}
-
-/* EFECTOS */
-
-.brillo-mouse {
-  position: fixed;
-  width: 180px;
-  height: 180px;
-
-  border-radius: 50%;
-  pointer-events: none;
-
-  background: radial-gradient(circle, rgba(212, 175, 55, 0.20), transparent 70%);
-
-  transform: translate(-50%, -50%);
-  z-index: 1;
-  mix-blend-mode: screen;
-}
-
-.particulas {
-  position: fixed;
-  inset: 0;
-
-  pointer-events: none;
-  overflow: hidden;
-
-  z-index: 0;
-}
-
-.particulas span {
-  position: absolute;
-  bottom: -20px;
-
-  border-radius: 50%;
-  background: var(--dorado);
-  box-shadow: 0 0 12px rgba(212, 175, 55, 0.80);
-
-  opacity: 0.75;
-  animation: subirParticula linear infinite;
-}
-
-.animado,
-.card,
-.contacto-card {
-  opacity: 0;
-  transform: translateY(28px);
-  transition: 0.8s ease;
-}
-
-.animado.mostrar,
-.card.mostrar,
-.contacto-card.mostrar {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* ANIMACIONES */
-
-@keyframes luzPasando {
-  0% {
-    transform: translateX(-110%);
+/* ============================= */
+
+const galeriaGrid = document.getElementById("galeriaGrid");
+
+function crearMedia(item, modoLightbox = false) {
+  let elemento;
+
+  if (item.media === "video") {
+    elemento = document.createElement("video");
+    elemento.src = item.src;
+    elemento.preload = "metadata";
+    elemento.playsInline = true;
+
+    if (modoLightbox) {
+      elemento.controls = true;
+      elemento.autoplay = true;
+    } else {
+      elemento.muted = true;
+      elemento.loop = true;
+    }
+  } else {
+    elemento = document.createElement("img");
+    elemento.src = item.src;
+    elemento.alt = item.titulo || "Cadetes de Honor Huancayo";
+    elemento.loading = "lazy";
+    elemento.decoding = "async";
   }
 
-  100% {
-    transform: translateX(110%);
+  elemento.onerror = () => {
+    const contenedor = elemento.closest(".galeria-item");
+
+    if (contenedor) {
+      contenedor.innerHTML = `
+        <div class="error-media">
+          No se pudo cargar:<br>
+          ${item.src}
+        </div>
+      `;
+    }
+
+    console.error("No se pudo cargar:", item.src);
+  };
+
+  return elemento;
+}
+
+function cargarGaleria(filtro = "todo") {
+  if (!galeriaGrid) return;
+
+  galeriaGrid.innerHTML = "";
+
+  const fotosFiltradas =
+    filtro === "todo"
+      ? fotos
+      : fotos.filter((foto) => foto.tipo === filtro);
+
+  fotosFiltradas.forEach((foto, index) => {
+    const item = document.createElement("div");
+    item.classList.add("galeria-item");
+
+    if (foto.media === "video") {
+      item.classList.add("video");
+    }
+
+    const media = crearMedia(foto);
+    item.appendChild(media);
+
+    const etiqueta = document.createElement("div");
+    etiqueta.classList.add("galeria-etiqueta");
+    etiqueta.textContent = foto.titulo;
+    item.appendChild(etiqueta);
+
+    galeriaGrid.appendChild(item);
+
+    item.addEventListener("click", () => {
+      abrirLightbox(fotosFiltradas, index);
+    });
+  });
+}
+
+cargarGaleria();
+
+/* ============================= */
+/* FILTROS */
+/* ============================= */
+
+const botonesFiltro = document.querySelectorAll(".filtro");
+
+botonesFiltro.forEach((boton) => {
+  boton.addEventListener("click", () => {
+    botonesFiltro.forEach((b) => b.classList.remove("activo"));
+    boton.classList.add("activo");
+
+    cargarGaleria(boton.dataset.filtro);
+  });
+});
+
+/* ============================= */
+/* LIGHTBOX CARRUSEL */
+/* Foto pequeña + laterales + flechas grandes */
+/* ============================= */
+
+let indiceActual = 0;
+let listaActual = [];
+
+function abrirLightbox(lista, indice) {
+  listaActual = lista;
+  indiceActual = indice;
+
+  const lightboxAnterior = document.getElementById("lightbox");
+
+  if (lightboxAnterior) {
+    lightboxAnterior.remove();
+  }
+
+  const lightbox = document.createElement("div");
+  lightbox.classList.add("lightbox");
+  lightbox.id = "lightbox";
+
+  lightbox.innerHTML = `
+    <div class="carousel-pro">
+
+      <button class="cerrar-lightbox" id="cerrarLightbox">×</button>
+
+      <div class="carousel-titulo">
+        <span>Galería profesional</span>
+        <h3 id="tituloLightbox">Evento especial</h3>
+      </div>
+
+      <div class="carousel-frame">
+
+        <button class="flecha-carousel flecha-izquierda" id="prevLightbox">
+          ‹
+        </button>
+
+        <div class="carousel-imagenes" id="mediaLightbox"></div>
+
+        <button class="flecha-carousel flecha-derecha" id="nextLightbox">
+          ›
+        </button>
+
+      </div>
+
+      <div class="contador-lightbox" id="contadorLightbox"></div>
+
+    </div>
+  `;
+
+  document.body.appendChild(lightbox);
+  document.body.style.overflow = "hidden";
+
+  actualizarMediaLightbox();
+
+  document.getElementById("cerrarLightbox").addEventListener("click", cerrarLightbox);
+  document.getElementById("prevLightbox").addEventListener("click", imagenAnterior);
+  document.getElementById("nextLightbox").addEventListener("click", imagenSiguiente);
+
+  lightbox.addEventListener("click", (e) => {
+    if (e.target.id === "lightbox") {
+      cerrarLightbox();
+    }
+  });
+}
+
+function cerrarLightbox() {
+  const lightbox = document.getElementById("lightbox");
+
+  if (lightbox) {
+    lightbox.remove();
+    document.body.style.overflow = "auto";
   }
 }
 
-@keyframes flotar {
-  from {
-    transform: translateY(0);
+function imagenAnterior() {
+  indiceActual--;
+
+  if (indiceActual < 0) {
+    indiceActual = listaActual.length - 1;
   }
 
-  to {
-    transform: translateY(-12px);
+  actualizarMediaLightbox();
+}
+
+function imagenSiguiente() {
+  indiceActual++;
+
+  if (indiceActual >= listaActual.length) {
+    indiceActual = 0;
+  }
+
+  actualizarMediaLightbox();
+}
+
+function crearSlideCarrusel(item, clases, accion) {
+  const slide = document.createElement("div");
+
+  /* IMPORTANTE:
+     Aquí usamos className para permitir varias clases juntas:
+     "lado lado-izquierdo" o "lado lado-derecho".
+  */
+  slide.className = `slide-carousel ${clases}`;
+
+  const esCentro = clases.includes("centro");
+  const media = crearMedia(item, esCentro);
+
+  if (item.media === "video" && !esCentro) {
+    media.controls = false;
+    media.autoplay = false;
+    media.muted = true;
+  }
+
+  if (!esCentro) {
+    slide.addEventListener("click", accion);
+  }
+
+  const info = document.createElement("div");
+  info.classList.add("info-slide");
+
+  if (esCentro) {
+    info.innerHTML = `
+      <strong>${item.titulo}</strong>
+      <span>Toca la imagen para verla en pantalla completa</span>
+    `;
+    slide.appendChild(info);
+
+    slide.addEventListener("click", () => {
+      abrirPantallaCompleta(item);
+    });
+  }
+
+  slide.appendChild(media);
+
+  return slide;
+}
+
+function actualizarMediaLightbox() {
+  const contenedor = document.getElementById("mediaLightbox");
+  const contador = document.getElementById("contadorLightbox");
+  const titulo = document.getElementById("tituloLightbox");
+
+  if (!contenedor) return;
+
+  contenedor.innerHTML = "";
+
+  const total = listaActual.length;
+
+  const indiceIzquierda = indiceActual - 1 < 0 ? total - 1 : indiceActual - 1;
+  const indiceDerecha = indiceActual + 1 >= total ? 0 : indiceActual + 1;
+
+  const itemIzquierda = listaActual[indiceIzquierda];
+  const itemCentro = listaActual[indiceActual];
+  const itemDerecha = listaActual[indiceDerecha];
+
+  const slideIzquierda = crearSlideCarrusel(
+    itemIzquierda,
+    "lado lado-izquierdo",
+    imagenAnterior
+  );
+
+  const slideCentro = crearSlideCarrusel(
+    itemCentro,
+    "centro",
+    null
+  );
+
+  const slideDerecha = crearSlideCarrusel(
+    itemDerecha,
+    "lado lado-derecho",
+    imagenSiguiente
+  );
+
+  contenedor.appendChild(slideIzquierda);
+  contenedor.appendChild(slideCentro);
+  contenedor.appendChild(slideDerecha);
+
+  if (titulo) {
+    titulo.textContent = itemCentro.titulo;
+  }
+
+  if (contador) {
+    contador.innerHTML = `
+      <strong>${indiceActual + 1} / ${listaActual.length}</strong>
+      <span>Desliza o usa las flechas para cambiar</span>
+    `;
   }
 }
 
-@keyframes brilloTexto {
-  0% {
-    filter: brightness(1);
-  }
+/* ============================= */
+/* PANTALLA COMPLETA DE FOTO */
+/* ============================= */
 
-  50% {
-    filter: brightness(1.45);
-  }
+function abrirPantallaCompleta(item) {
+  const visor = document.createElement("div");
+  visor.classList.add("visor-full");
+  visor.id = "visorFull";
 
-  100% {
-    filter: brightness(1);
+  const media = crearMedia(item, true);
+
+  visor.innerHTML = `
+    <button class="cerrar-full" id="cerrarFull">×</button>
+    <div class="visor-full-contenido" id="visorFullContenido"></div>
+  `;
+
+  document.body.appendChild(visor);
+
+  const contenedor = document.getElementById("visorFullContenido");
+  contenedor.appendChild(media);
+
+  document.getElementById("cerrarFull").addEventListener("click", cerrarPantallaCompleta);
+
+  visor.addEventListener("click", (e) => {
+    if (e.target.id === "visorFull") {
+      cerrarPantallaCompleta();
+    }
+  });
+}
+
+function cerrarPantallaCompleta() {
+  const visor = document.getElementById("visorFull");
+
+  if (visor) {
+    visor.remove();
   }
 }
 
-@keyframes respirar {
-  0%, 100% {
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.55);
+/* ============================= */
+/* TECLADO */
+/* ============================= */
+
+document.addEventListener("keydown", (e) => {
+  const lightbox = document.getElementById("lightbox");
+  const visorFull = document.getElementById("visorFull");
+
+  if (e.key === "Escape") {
+    if (visorFull) {
+      cerrarPantallaCompleta();
+      return;
+    }
+
+    if (lightbox) {
+      cerrarLightbox();
+      return;
+    }
   }
 
-  50% {
-    box-shadow: 0 0 26px rgba(212, 175, 55, 0.42);
+  if (!lightbox) return;
+
+  if (e.key === "ArrowLeft") {
+    imagenAnterior();
   }
+
+  if (e.key === "ArrowRight") {
+    imagenSiguiente();
+  }
+});
+
+/* ============================= */
+/* DESLIZAR EN CELULAR */
+/* ============================= */
+
+let inicioToque = 0;
+let finToque = 0;
+
+document.addEventListener("touchstart", (e) => {
+  inicioToque = e.changedTouches[0].screenX;
+});
+
+document.addEventListener("touchend", (e) => {
+  const lightbox = document.getElementById("lightbox");
+
+  if (!lightbox) return;
+
+  finToque = e.changedTouches[0].screenX;
+
+  if (inicioToque - finToque > 60) {
+    imagenSiguiente();
+  }
+
+  if (finToque - inicioToque > 60) {
+    imagenAnterior();
+  }
+});
+
+/* ============================= */
+/* ANIMACIÓN AL BAJAR */
+/* ============================= */
+
+const elementosAnimados = document.querySelectorAll(".animado, .card, .contacto-card");
+
+const observer = new IntersectionObserver((entradas) => {
+  entradas.forEach((entrada) => {
+    if (entrada.isIntersecting) {
+      entrada.target.classList.add("mostrar");
+    }
+  });
+}, {
+  threshold: 0.15
+});
+
+elementosAnimados.forEach((elemento) => {
+  observer.observe(elemento);
+});
+
+/* ============================= */
+/* MENÚ ACTIVO AL BAJAR */
+/* ============================= */
+
+const secciones = document.querySelectorAll("header, section[id]");
+const linksMenu = document.querySelectorAll(".nav-links a");
+
+window.addEventListener("scroll", () => {
+  let actual = "inicio";
+
+  secciones.forEach((seccion) => {
+    const top = window.scrollY;
+    const offset = seccion.offsetTop - 150;
+    const alto = seccion.offsetHeight;
+    const id = seccion.getAttribute("id");
+
+    if (top >= offset && top < offset + alto) {
+      actual = id;
+    }
+  });
+
+  linksMenu.forEach((link) => {
+    link.classList.remove("activo");
+
+    if (link.getAttribute("href") === `#${actual}`) {
+      link.classList.add("activo");
+    }
+  });
+});
+
+/* ============================= */
+/* BRILLO SIGUIENDO EL MOUSE */
+/* ============================= */
+
+const brillo = document.createElement("div");
+brillo.classList.add("brillo-mouse");
+document.body.appendChild(brillo);
+
+document.addEventListener("mousemove", (e) => {
+  brillo.style.left = e.clientX + "px";
+  brillo.style.top = e.clientY + "px";
+});
+
+/* ============================= */
+/* PARTÍCULAS DORADAS */
+/* ============================= */
+
+const contenedorParticulas = document.createElement("div");
+contenedorParticulas.classList.add("particulas");
+document.body.appendChild(contenedorParticulas);
+
+for (let i = 0; i < 36; i++) {
+  const particula = document.createElement("span");
+
+  particula.style.left = Math.random() * 100 + "%";
+  particula.style.animationDelay = Math.random() * 8 + "s";
+  particula.style.animationDuration = 6 + Math.random() * 8 + "s";
+  particula.style.width = 3 + Math.random() * 4 + "px";
+  particula.style.height = particula.style.width;
+
+  contenedorParticulas.appendChild(particula);
 }
-
-@keyframes subirParticula {
-  0% {
-    transform: translateY(0);
-    opacity: 0;
-  }
-
-  20% {
-    opacity: 0.8;
-  }
-
-  100% {
-    transform: translateY(-110vh);
-    opacity: 0;
-  }
-}
-
-@keyframes aparecer {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
-
-
-/* TABLET Y PC */
-
-@media (min-width: 768px) {
-  .navbar {
-    width: calc(100% - 36px);
-    max-width: 1500px;
-    min-height: 92px;
-
-    top: 16px;
-    padding: 16px 28px;
-    border-radius: 30px;
-  }
-
-  .marca-img {
-    width: 70px;
-    height: 70px;
-    min-width: 70px;
-  }
-
-  .marca strong {
-    font-size: 21px;
-  }
-
-  .marca span {
-    font-size: 16px;
-  }
-
-  .btn-menu {
-    display: none;
-  }
-
-  .nav-links {
-    position: static;
-
-    width: auto;
-
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 14px;
-
-    padding: 0;
-    border: none;
-    background: transparent;
-    box-shadow: none;
-  }
-
-  .nav-links a {
-    padding: 16px 24px;
-    border-radius: 22px;
-    font-size: 18px;
-  }
-
-  .hero {
-    padding-top: 148px;
-  }
-
-  .hero-contenido {
-    grid-template-columns: 1.15fr 0.85fr;
-  }
-
-  .hero-botones {
-    display: flex;
-  }
-
-  .btn-principal,
-  .btn-secundario {
-    width: auto;
-  }
-
-  .contactos-rapidos {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .cards {
-    grid-template-columns: repeat(4, 1fr);
-  }
-
-  .galeria {
-    grid-template-columns: repeat(4, 1fr);
-  }
-
-  .galeria-item {
-    height: 230px;
-  }
-
-  .galeria-item:nth-child(3n + 1) {
-    height: 472px;
-  }
-
-  .boton-whatsapp-fijo {
-    width: 270px;
-    left: 50%;
-    right: auto;
-    transform: translateX(-50%);
-  }
-
-  footer {
-    padding-bottom: 90px;
-  }
-}
-
-/* CELULAR */
-
-@media (max-width: 768px) {
-  .lightbox {
-    padding: 8px;
-  }
-
-  .carousel-pro {
-    height: 88vh;
-    border-radius: 24px;
-  }
-
-  .carousel-titulo {
-    padding: 16px 62px 8px 16px;
-  }
-
-  .carousel-titulo span {
-    font-size: 10px;
-    letter-spacing: 1.5px;
-  }
-
-  .carousel-titulo h3 {
-    font-size: 16px;
-  }
-
-  .cerrar-lightbox {
-    top: 12px;
-    right: 12px;
-
-    width: 44px;
-    height: 44px;
-
-    font-size: 32px;
-  }
-
-  .carousel-frame {
-    padding: 8px 48px 12px;
-  }
-
-  .carousel-imagenes {
-    gap: 8px;
-  }
-
-  .slide-carousel {
-    height: 56vh;
-    border-radius: 20px;
-  }
-
-  .slide-carousel.centro {
-    width: 68%;
-  }
-
-  .slide-carousel.lado {
-    width: 25%;
-    opacity: 0.45;
-    transform: scale(0.78);
-  }
-
-  .slide-carousel.lado-izquierdo {
-    margin-left: -12%;
-  }
-
-  .slide-carousel.lado-derecho {
-    margin-right: -12%;
-  }
-
-  .flecha-carousel {
-    width: 58px;
-    height: 58px;
-
-    font-size: 60px;
-    line-height: 36px;
-
-    border: 2px solid rgba(255, 241, 168, 0.9);
-  }
-
-  .flecha-izquierda {
-    left: 4px;
-  }
-
-  .flecha-derecha {
-    right: 4px;
-  }
-
-  .contador-lightbox {
-    font-size: 13px;
-    padding-bottom: 14px;
-  }
-}
-
-/* CELULAR PEQUEÑO */
-
-@media (max-width: 420px) {
-  .navbar {
-    width: calc(100% - 18px);
-    min-height: 82px;
-    padding: 11px 12px;
-  }
-
-  .marca {
-    gap: 10px;
-  }
-
-  .marca-img {
-    width: 56px;
-    height: 56px;
-    min-width: 56px;
-  }
-
-  .marca strong {
-    font-size: 16px;
-  }
-
-  .marca span {
-    font-size: 13px;
-  }
-
-  .btn-menu {
-    width: 48px;
-    height: 48px;
-    font-size: 27px;
-  }
-
-  .hero {
-    padding-left: 13px;
-    padding-right: 13px;
-    padding-top: 122px;
-  }
-
-  .hero-texto p {
-    font-size: 15px;
-  }
-
-  .foto-principal {
-    height: 390px;
-  }
-
-  .galeria {
-    gap: 10px;
-  }
-
-  .galeria-item {
-    height: 172px;
-    border-radius: 19px;
-  }
-
-  .galeria-item:nth-child(3n + 1) {
-    height: 354px;
-  }
-
-  .red-social {
-    width: 45px;
-    height: 45px;
-  }
-
-  .brillo-mouse {
-    display: none;
-  }
-
-  .particulas span {
-    opacity: 0.45;
-  }
-
-  .carousel-frame {
-    padding-left: 42px;
-    padding-right: 42px;
-  }
-
-  .slide-carousel {
-    height: 52vh;
-  }
-
-  .slide-carousel.centro {
-    width: 70%;
-  }
-
-  .slide-carousel.lado {
-    width: 26%;
-    opacity: 0.42;
-  }
-
-  .flecha-carousel {
-    width: 54px;
-    height: 54px;
-    font-size: 56px;
-  }
-}
-
-/* REDUCIR MOVIMIENTO */
-
-@media (prefers-reduced-motion: reduce) {
-  * {
-    animation: none !important;
-    transition: none !important;
-    scroll-behavior: auto !important;
-  }
-}
-
-
-  
