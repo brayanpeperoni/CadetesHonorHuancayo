@@ -1,7 +1,392 @@
 /* ================================================= */
 /* SCRIPT COMPLETO - CADETES DE HONOR HUANCAYO */
-/* GALERÍA EN PÁGINA: CENTRO + COSTADOS + FLECHAS */
+/* GALERÍA MÁS GRANDE EN CELULAR + FLECHAS CENTRADAS */
 /* ================================================= */
+
+/* ============================= */
+/* AJUSTE VISUAL DESDE SCRIPT */
+/* AGRANDA FOTO Y CENTRA FLECHAS */
+/* ============================= */
+
+(function agregarEstilosGaleriaMejorada() {
+  const estilosAnteriores = document.getElementById("estilosGaleriaMejorada");
+
+  if (estilosAnteriores) {
+    estilosAnteriores.remove();
+  }
+
+  const style = document.createElement("style");
+  style.id = "estilosGaleriaMejorada";
+
+  style.innerHTML = `
+    /* ================================================= */
+    /* GALERÍA PRINCIPAL - FOTO GRANDE Y FLECHAS CENTRADAS */
+    /* ================================================= */
+
+    .galeria-preview {
+      position: relative !important;
+      width: 100% !important;
+      max-width: 1150px !important;
+      min-height: 620px !important;
+      margin: 0 auto !important;
+
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+
+      overflow: hidden !important;
+    }
+
+    .preview-slide {
+      position: relative !important;
+      overflow: hidden !important;
+      background: #111 !important;
+      border: 1px solid rgba(255, 241, 168, 0.42) !important;
+      box-shadow:
+        0 18px 42px rgba(0, 0, 0, 0.55),
+        0 0 30px rgba(255, 212, 90, 0.18) !important;
+    }
+
+    .preview-slide img,
+    .preview-slide video {
+      width: 100% !important;
+      height: 100% !important;
+      display: block !important;
+      object-fit: cover !important;
+    }
+
+    .preview-centro {
+      width: 440px !important;
+      height: 590px !important;
+      z-index: 5 !important;
+      border-radius: 32px !important;
+      border: 2px solid rgba(255, 241, 168, 0.95) !important;
+
+      box-shadow:
+        0 0 40px rgba(255, 241, 168, 0.45),
+        0 0 80px rgba(255, 214, 102, 0.26),
+        0 26px 70px rgba(0, 0, 0, 0.70) !important;
+
+      cursor: pointer !important;
+    }
+
+    .preview-centro img,
+    .preview-centro video {
+      filter: brightness(1.16) contrast(1.06) !important;
+    }
+
+    .preview-lado {
+      position: absolute !important;
+      top: 50% !important;
+      width: 300px !important;
+      height: 470px !important;
+      z-index: 2 !important;
+
+      opacity: 0.45 !important;
+      transform: translateY(-50%) scale(0.88) !important;
+
+      border-radius: 28px !important;
+      filter: brightness(0.80) blur(0.2px) !important;
+      cursor: pointer !important;
+    }
+
+    .preview-lado:hover {
+      opacity: 0.75 !important;
+      filter: brightness(1) blur(0) !important;
+      transform: translateY(-50%) scale(0.92) !important;
+    }
+
+    .preview-lado-izq {
+      left: 10% !important;
+      margin: 0 !important;
+    }
+
+    .preview-lado-der {
+      right: 10% !important;
+      margin: 0 !important;
+    }
+
+    .flecha-preview {
+      position: absolute !important;
+      top: 50% !important;
+      transform: translateY(-50%) !important;
+
+      width: 70px !important;
+      height: 70px !important;
+      z-index: 40 !important;
+
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+
+      border-radius: 50% !important;
+      border: 3px solid rgba(255, 244, 184, 0.98) !important;
+
+      background:
+        radial-gradient(circle at top, #fff8d5, #ffd861 52%, #b78000) !important;
+
+      color: #111 !important;
+      font-size: 70px !important;
+      font-weight: 900 !important;
+      line-height: 0.8 !important;
+      padding-bottom: 9px !important;
+
+      box-shadow:
+        0 0 28px rgba(255, 232, 160, 0.95),
+        0 0 55px rgba(255, 214, 102, 0.60),
+        0 12px 28px rgba(0, 0, 0, 0.60) !important;
+
+      cursor: pointer !important;
+      transition: 0.25s ease !important;
+    }
+
+    .flecha-preview:hover {
+      transform: translateY(-50%) scale(1.10) !important;
+      background: #fff1b3 !important;
+    }
+
+    .flecha-preview-izq {
+      left: 8px !important;
+    }
+
+    .flecha-preview-der {
+      right: 8px !important;
+    }
+
+    .preview-etiqueta {
+      position: absolute !important;
+      left: 16px !important;
+      right: 16px !important;
+      bottom: 16px !important;
+      z-index: 5 !important;
+
+      padding: 12px 15px !important;
+      border-radius: 999px !important;
+
+      background: rgba(255, 244, 184, 0.96) !important;
+      color: #111 !important;
+
+      font-size: 13px !important;
+      font-weight: 900 !important;
+      text-align: center !important;
+
+      box-shadow: 0 0 22px rgba(255, 214, 102, 0.40) !important;
+    }
+
+    .preview-ayuda {
+      position: absolute !important;
+      left: 18px !important;
+      right: 18px !important;
+      bottom: 66px !important;
+      z-index: 5 !important;
+
+      padding: 8px 10px !important;
+      border-radius: 16px !important;
+
+      background: rgba(0, 0, 0, 0.58) !important;
+      color: #fff !important;
+      backdrop-filter: blur(8px) !important;
+
+      font-size: 11px !important;
+      font-weight: 800 !important;
+      text-align: center !important;
+    }
+
+    /* ================================================= */
+    /* CELULAR - FOTO MÁS GRANDE */
+    /* ================================================= */
+
+    @media (max-width: 768px) {
+      #galeria.seccion {
+        width: 100% !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        overflow: hidden !important;
+      }
+
+      #galeria h2,
+      #galeria .subtitulo,
+      #galeria .texto-galeria,
+      #galeria .galeria-filtros {
+        padding-left: 14px !important;
+        padding-right: 14px !important;
+      }
+
+      .galeria,
+      .galeria-grid {
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow: hidden !important;
+      }
+
+      .galeria-preview {
+        width: 100vw !important;
+        max-width: 100vw !important;
+        min-height: 575px !important;
+        padding: 0 !important;
+        margin: 0 auto !important;
+      }
+
+      .preview-centro {
+        width: 84vw !important;
+        max-width: 380px !important;
+        height: 520px !important;
+        border-radius: 30px !important;
+      }
+
+      .preview-lado {
+        width: 52vw !important;
+        height: 430px !important;
+        opacity: 0.43 !important;
+        border-radius: 26px !important;
+      }
+
+      .preview-lado-izq {
+        left: -28vw !important;
+      }
+
+      .preview-lado-der {
+        right: -28vw !important;
+      }
+
+      .flecha-preview {
+        width: 62px !important;
+        height: 62px !important;
+        font-size: 62px !important;
+        padding-bottom: 8px !important;
+      }
+
+      .flecha-preview-izq {
+        left: 10px !important;
+      }
+
+      .flecha-preview-der {
+        right: 10px !important;
+      }
+
+      .preview-etiqueta {
+        font-size: 12px !important;
+        padding: 11px 12px !important;
+      }
+
+      .preview-ayuda {
+        bottom: 62px !important;
+        font-size: 10px !important;
+      }
+    }
+
+    /* ================================================= */
+    /* CELULARES PEQUEÑOS */
+    /* ================================================= */
+
+    @media (max-width: 420px) {
+      .galeria-preview {
+        min-height: 545px !important;
+      }
+
+      .preview-centro {
+        width: 86vw !important;
+        max-width: 350px !important;
+        height: 495px !important;
+        border-radius: 28px !important;
+      }
+
+      .preview-lado {
+        width: 54vw !important;
+        height: 400px !important;
+      }
+
+      .preview-lado-izq {
+        left: -31vw !important;
+      }
+
+      .preview-lado-der {
+        right: -31vw !important;
+      }
+
+      .flecha-preview {
+        width: 58px !important;
+        height: 58px !important;
+        font-size: 58px !important;
+      }
+
+      .flecha-preview-izq {
+        left: 8px !important;
+      }
+
+      .flecha-preview-der {
+        right: 8px !important;
+      }
+    }
+
+    /* ================================================= */
+    /* LIGHTBOX EN CELULAR TAMBIÉN MÁS GRANDE */
+    /* ================================================= */
+
+    @media (max-width: 768px) {
+      .carousel-frame {
+        padding: 0 12px !important;
+      }
+
+      .carousel-imagenes {
+        position: relative !important;
+        width: 100% !important;
+        height: 100% !important;
+        gap: 0 !important;
+      }
+
+      .slide-carousel.centro {
+        width: 82vw !important;
+        max-width: 390px !important;
+        height: 70% !important;
+        border-radius: 26px !important;
+        z-index: 5 !important;
+      }
+
+      .slide-carousel.lado {
+        position: absolute !important;
+        top: 50% !important;
+
+        width: 50vw !important;
+        height: 55% !important;
+
+        opacity: 0.40 !important;
+        transform: translateY(-50%) scale(0.86) !important;
+        border-radius: 24px !important;
+      }
+
+      .slide-carousel.lado-izquierdo {
+        left: -27vw !important;
+        margin: 0 !important;
+      }
+
+      .slide-carousel.lado-derecho {
+        right: -27vw !important;
+        margin: 0 !important;
+      }
+
+      .flecha-carousel {
+        top: 50% !important;
+        width: 62px !important;
+        height: 62px !important;
+        font-size: 62px !important;
+        line-height: 0.8 !important;
+        padding-bottom: 8px !important;
+        z-index: 90 !important;
+      }
+
+      .flecha-izquierda {
+        left: 8px !important;
+      }
+
+      .flecha-derecha {
+        right: 8px !important;
+      }
+    }
+  `;
+
+  document.head.appendChild(style);
+})();
 
 /* ============================= */
 /* MENÚ MÓVIL */
@@ -119,7 +504,6 @@ function crearMedia(item, modoLightbox = false) {
 
 /* ============================= */
 /* GALERÍA EN PÁGINA */
-/* CENTRO + COSTADOS SEMIVISIBLES */
 /* ============================= */
 
 const galeriaGrid = document.getElementById("galeriaGrid");
@@ -183,10 +567,12 @@ function renderGaleriaPreview() {
   const btnPrev = document.createElement("button");
   btnPrev.className = "flecha-preview flecha-preview-izq";
   btnPrev.innerHTML = "‹";
+  btnPrev.setAttribute("aria-label", "Imagen anterior");
 
   const btnNext = document.createElement("button");
   btnNext.className = "flecha-preview flecha-preview-der";
   btnNext.innerHTML = "›";
+  btnNext.setAttribute("aria-label", "Imagen siguiente");
 
   const slideIzq = crearPreviewSlide(lista[indiceIzq], "preview-lado preview-lado-izq");
   const slideCentro = crearPreviewSlide(lista[indiceGaleriaActual], "preview-centro");
@@ -263,7 +649,7 @@ botonesFiltro.forEach((boton) => {
 });
 
 /* ============================= */
-/* LIGHTBOX CARRUSEL PROFESIONAL */
+/* LIGHTBOX CARRUSEL */
 /* ============================= */
 
 let indiceActual = 0;
@@ -286,7 +672,7 @@ function abrirLightbox(lista, indice) {
   lightbox.innerHTML = `
     <div class="carousel-pro">
 
-      <button class="cerrar-lightbox" id="cerrarLightbox">×</button>
+      <button class="cerrar-lightbox" id="cerrarLightbox" aria-label="Cerrar galería">×</button>
 
       <div class="carousel-titulo">
         <span>Galería profesional</span>
@@ -295,13 +681,13 @@ function abrirLightbox(lista, indice) {
 
       <div class="carousel-frame">
 
-        <button class="flecha-carousel flecha-izquierda" id="prevLightbox">
+        <button class="flecha-carousel flecha-izquierda" id="prevLightbox" aria-label="Imagen anterior">
           ‹
         </button>
 
         <div class="carousel-imagenes" id="mediaLightbox"></div>
 
-        <button class="flecha-carousel flecha-derecha" id="nextLightbox">
+        <button class="flecha-carousel flecha-derecha" id="nextLightbox" aria-label="Imagen siguiente">
           ›
         </button>
 
@@ -461,7 +847,7 @@ function abrirPantallaCompleta(item) {
   visor.id = "visorFull";
 
   visor.innerHTML = `
-    <button class="cerrar-full" id="cerrarFull">×</button>
+    <button class="cerrar-full" id="cerrarFull" aria-label="Cerrar pantalla completa">×</button>
     <div class="visor-full-contenido" id="visorFullContenido"></div>
   `;
 
@@ -553,64 +939,35 @@ document.addEventListener("touchend", (e) => {
 
 const elementosAnimados = document.querySelectorAll(".animado, .card, .contacto-card");
 
-const observer = new IntersectionObserver((entradas) => {
-  entradas.forEach((entrada) => {
-    if (entrada.isIntersecting) {
-      entrada.target.classList.add("mostrar");
-    }
-  });
-}, {
-  threshold: 0.15
-});
+const observador = new IntersectionObserver(
+  (entradas) => {
+    entradas.forEach((entrada) => {
+      if (entrada.isIntersecting) {
+        entrada.target.classList.add("mostrar");
+      }
+    });
+  },
+  {
+    threshold: 0.16
+  }
+);
 
 elementosAnimados.forEach((elemento) => {
-  observer.observe(elemento);
+  observador.observe(elemento);
 });
 
 /* ============================= */
-/* MENÚ ACTIVO AL BAJAR */
+/* BRILLO DEL MOUSE EN PC */
 /* ============================= */
 
-const secciones = document.querySelectorAll("header, section[id]");
-const linksMenu = document.querySelectorAll(".nav-links a");
-
-window.addEventListener("scroll", () => {
-  let actual = "inicio";
-
-  secciones.forEach((seccion) => {
-    const top = window.scrollY;
-    const offset = seccion.offsetTop - 150;
-    const alto = seccion.offsetHeight;
-    const id = seccion.getAttribute("id");
-
-    if (top >= offset && top < offset + alto) {
-      actual = id;
-    }
-  });
-
-  linksMenu.forEach((link) => {
-    link.classList.remove("activo");
-
-    if (link.getAttribute("href") === `#${actual}`) {
-      link.classList.add("activo");
-    }
-  });
-});
-
-/* ============================= */
-/* BRILLO SIGUIENDO EL MOUSE */
-/* ============================= */
-
-const brilloExistente = document.querySelector(".brillo-mouse");
-
-if (!brilloExistente) {
+if (window.innerWidth > 768) {
   const brillo = document.createElement("div");
-  brillo.classList.add("brillo-mouse");
+  brillo.className = "brillo-mouse";
   document.body.appendChild(brillo);
 
   document.addEventListener("mousemove", (e) => {
-    brillo.style.left = e.clientX + "px";
-    brillo.style.top = e.clientY + "px";
+    brillo.style.left = `${e.clientX}px`;
+    brillo.style.top = `${e.clientY}px`;
   });
 }
 
@@ -618,22 +975,23 @@ if (!brilloExistente) {
 /* PARTÍCULAS DORADAS */
 /* ============================= */
 
-const particulasExistentes = document.querySelector(".particulas");
+const particulas = document.createElement("div");
+particulas.className = "particulas";
+document.body.appendChild(particulas);
 
-if (!particulasExistentes) {
-  const contenedorParticulas = document.createElement("div");
-  contenedorParticulas.classList.add("particulas");
-  document.body.appendChild(contenedorParticulas);
+for (let i = 0; i < 18; i++) {
+  const particula = document.createElement("span");
 
-  for (let i = 0; i < 36; i++) {
-    const particula = document.createElement("span");
+  const tamaño = Math.random() * 5 + 3;
+  const posicion = Math.random() * 100;
+  const duracion = Math.random() * 8 + 7;
+  const retraso = Math.random() * 6;
 
-    particula.style.left = Math.random() * 100 + "%";
-    particula.style.animationDelay = Math.random() * 8 + "s";
-    particula.style.animationDuration = 6 + Math.random() * 8 + "s";
-    particula.style.width = 3 + Math.random() * 4 + "px";
-    particula.style.height = particula.style.width;
+  particula.style.width = `${tamaño}px`;
+  particula.style.height = `${tamaño}px`;
+  particula.style.left = `${posicion}%`;
+  particula.style.animationDuration = `${duracion}s`;
+  particula.style.animationDelay = `${retraso}s`;
 
-    contenedorParticulas.appendChild(particula);
-  }
+  particulas.appendChild(particula);
 }
