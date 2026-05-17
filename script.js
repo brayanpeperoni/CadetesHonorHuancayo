@@ -1,3 +1,6 @@
+/* ================================================= */
+/* SCRIPT COMPLETO - GALERÍA PROFESIONAL */
+/* ================================================= */
 
 /* ============================= */
 /* MENÚ MÓVIL */
@@ -30,6 +33,7 @@ if (btnMenu && navLinks) {
 /* ============================= */
 
 const fotos = [
+  /* FIESTA */
   { src: "Fiesta/IMG-20260512-WA0126.jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Fiesta de quince años" },
   { src: "Fiesta/IMG-20260512-WA0127.jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Entrada de honor" },
   { src: "Fiesta/IMG-20260512-WA0128.jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Evento especial" },
@@ -59,6 +63,7 @@ const fotos = [
   { src: "Fiesta/IMG-20260512-WA0152.jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Acompañamiento elegante" },
   { src: "Fiesta/IMG-20260512-WA0153.jpg.jpeg", tipo: "evento", media: "imagen", titulo: "Ceremonia especial" },
 
+  /* SESIÓN DE FOTOS */
   { src: "SesionDeFotos/IMG-20260512-WA0124(2).jpg.jpeg", tipo: "sesion", media: "imagen", titulo: "Sesión de fotos" },
   { src: "SesionDeFotos/IMG-20260512-WA0154.jpg.jpeg", tipo: "sesion", media: "imagen", titulo: "Fotografía especial" },
   { src: "SesionDeFotos/IMG-20260512-WA0155.jpg.jpeg", tipo: "sesion", media: "imagen", titulo: "Recuerdo fotográfico" },
@@ -69,6 +74,7 @@ const fotos = [
   { src: "SesionDeFotos/IMG-20260512-WA0160.jpg.jpeg", tipo: "sesion", media: "imagen", titulo: "Fotografía de recuerdo" },
   { src: "SesionDeFotos/VID-20260512-WA0161.mp4", tipo: "sesion", media: "video", titulo: "Video de sesión" },
 
+  /* SORPRESA */
   { src: "Sorpresa/IMG-20260512-WA0162.jpg.jpeg", tipo: "sorpresa", media: "imagen", titulo: "Sorpresa especial" },
   { src: "Sorpresa/IMG-20260512-WA0163.jpg.jpeg", tipo: "sorpresa", media: "imagen", titulo: "Momento sorpresa" },
   { src: "Sorpresa/IMG-20260512-WA0164.jpg.jpeg", tipo: "sorpresa", media: "imagen", titulo: "Detalle para quinceañera" },
@@ -192,7 +198,7 @@ function abrirLightbox(lista, indice) {
   }
 
   const lightbox = document.createElement("div");
-  lightbox.classList.add("lightbox");
+  lightbox.className = "lightbox";
   lightbox.id = "lightbox";
 
   lightbox.innerHTML = `
@@ -269,23 +275,38 @@ function imagenSiguiente() {
   actualizarMediaLightbox();
 }
 
-function crearSlideCarrusel(item, clase, accion) {
+function crearSlideCarrusel(item, clases, accion) {
   const slide = document.createElement("div");
-  slide.classList.add("slide-carousel", clase);
+  slide.className = `slide-carousel ${clases}`;
 
-  const media = crearMedia(item, clase === "centro");
+  const esCentro = clases.includes("centro");
+  const media = crearMedia(item, esCentro);
 
-  if (item.media === "video" && clase !== "centro") {
+  if (item.media === "video" && !esCentro) {
     media.controls = false;
     media.autoplay = false;
     media.muted = true;
   }
 
-  if (clase !== "centro") {
+  slide.appendChild(media);
+
+  if (esCentro) {
+    const info = document.createElement("div");
+    info.className = "info-slide";
+
+    info.innerHTML = `
+      <strong>${item.titulo}</strong>
+      <span>Toca para ver completo</span>
+    `;
+
+    slide.appendChild(info);
+
+    slide.addEventListener("click", () => {
+      abrirPantallaCompleta(item);
+    });
+  } else {
     slide.addEventListener("click", accion);
   }
-
-  slide.appendChild(media);
 
   return slide;
 }
@@ -335,18 +356,85 @@ function actualizarMediaLightbox() {
   }
 
   if (contador) {
-    contador.textContent = `${indiceActual + 1} / ${listaActual.length}`;
+    contador.innerHTML = `
+      <strong>${indiceActual + 1} / ${listaActual.length}</strong>
+      <span>Usa las flechas o desliza</span>
+    `;
   }
 }
 
+/* ============================= */
+/* PANTALLA COMPLETA */
+/* ============================= */
+
+function abrirPantallaCompleta(item) {
+  const visorAnterior = document.getElementById("visorFull");
+
+  if (visorAnterior) {
+    visorAnterior.remove();
+  }
+
+  const visor = document.createElement("div");
+  visor.className = "visor-full";
+  visor.id = "visorFull";
+
+  visor.innerHTML = `
+    <button class="cerrar-full" id="cerrarFull">×</button>
+    <div class="visor-full-contenido" id="visorFullContenido"></div>
+  `;
+
+  document.body.appendChild(visor);
+
+  const contenedor = document.getElementById("visorFullContenido");
+  const media = crearMedia(item, true);
+  contenedor.appendChild(media);
+
+  document.getElementById("cerrarFull").addEventListener("click", cerrarPantallaCompleta);
+
+  visor.addEventListener("click", (e) => {
+    if (e.target.id === "visorFull") {
+      cerrarPantallaCompleta();
+    }
+  });
+}
+
+function cerrarPantallaCompleta() {
+  const visor = document.getElementById("visorFull");
+
+  if (visor) {
+    visor.remove();
+  }
+}
+
+/* ============================= */
+/* TECLADO */
+/* ============================= */
+
 document.addEventListener("keydown", (e) => {
   const lightbox = document.getElementById("lightbox");
+  const visorFull = document.getElementById("visorFull");
 
-  if (!lightbox) return;
+  if (e.key === "Escape") {
+    if (visorFull) {
+      cerrarPantallaCompleta();
+      return;
+    }
 
-  if (e.key === "Escape") cerrarLightbox();
-  if (e.key === "ArrowLeft") imagenAnterior();
-  if (e.key === "ArrowRight") imagenSiguiente();
+    if (lightbox) {
+      cerrarLightbox();
+      return;
+    }
+  }
+
+  if (!lightbox || visorFull) return;
+
+  if (e.key === "ArrowLeft") {
+    imagenAnterior();
+  }
+
+  if (e.key === "ArrowRight") {
+    imagenSiguiente();
+  }
 });
 
 /* ============================= */
@@ -362,8 +450,9 @@ document.addEventListener("touchstart", (e) => {
 
 document.addEventListener("touchend", (e) => {
   const lightbox = document.getElementById("lightbox");
+  const visorFull = document.getElementById("visorFull");
 
-  if (!lightbox) return;
+  if (!lightbox || visorFull) return;
 
   finToque = e.changedTouches[0].screenX;
 
